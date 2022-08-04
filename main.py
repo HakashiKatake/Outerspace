@@ -1,7 +1,6 @@
 from configparser import RawConfigParser
 import pygame
 import os
-import time
 
 
 gameIcon = pygame.image.load('Assets/spaceship_red.png')
