@@ -136,16 +136,11 @@ aqua = (128, 255, 255)
 icy = (0,0,0)
 def draw_window(red, yellow, rfire, bfire, red_slowness, blue_slowness, medcharger, medchargeb, red_bullets, yellow_bullets, blue_hitbox, red_hitbox, red_health, yellow_health):
     global SUPER_VAL
-    medcharger1 = medcharger / 5
-    medchargeb1 = medchargeb / 5
+    
 
     
     yhp = yellow_health 
-    rhp = red_health 
-    rslow = red_slowness 
-    bslow = blue_slowness
-    rslbar = pygame.Rect(25,50,rslow,10)
-    bslbar =pygame.Rect(700,50,bslow,10)
+    rhp = red_health
     greenredhp = pygame.Rect(25,25,yhp,10)
     greenbluehp = pygame.Rect(700,25,rhp,10)
     WIN.blit(SPACE,(0,0))
@@ -154,8 +149,7 @@ def draw_window(red, yellow, rfire, bfire, red_slowness, blue_slowness, medcharg
     pygame.draw.rect(WIN, GREEN, greenredhp)
     pygame.draw.rect(WIN, RED, barbluehp)
     pygame.draw.rect(WIN, GREEN, greenbluehp)
-    pygame.draw.rect(WIN, aqua, rslbar)
-    pygame.draw.rect(WIN, aqua, bslbar)
+ 
                            
 
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
@@ -676,9 +670,19 @@ def info():
         TextSurf, TextRect = text_objects("• Attacking:-", largeText)
         TextRect.center = ((WIDTH/2.59),(HEIGHT/1.7))
         WIN.blit(TextSurf, TextRect) 
-        text("actived only once when the super bar goes to 100%",1.650,1.50,jblkacolor2,15,"verdana")
-        text("#Super:Supers are special attacks they can be",1.650,1.59,jblkacolor2,15,"verdana")
+        text("actived only once when the super bar goes to 100%",1.730,1.45,jblkacolor2,15,"verdana")
+        text("#Super: Supers are special attacks they can be",1.820,1.55,jblkacolor2,15,"verdana")
+        text("#Charging Super: You Can Charge Your Super",1.835,1.37,jblkacolor2,15,"verdana")
+        text("By Hitting The Enemy 4 Times With Normal Bullets.",1.750,1.30,jblkacolor2,15,"verdana")
+        largeText = pygame.font.SysFont("verdana",20,bold=True)
+        TextSurf, TextRect = text_objects("• Super:-", largeText)
+        TextRect.center = ((WIDTH/2.73),(HEIGHT/1.2))
+        WIN.blit(TextSurf, TextRect)
+        text("When someone hits you with their super you get a cooldown of 4 seconds.",1.750,1.32,jblkacolor2,15,"verdana")
 
+
+
+        
       
 
 
