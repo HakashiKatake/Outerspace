@@ -51,7 +51,7 @@ barbluehp = pygame.Rect(700,25,150,10)
 HEALTH_FONT = pygame.font.Font('fonts/airstrike.ttf', 40)
 WINNER_FONT = pygame.font.SysFont('comicsans', 100)
 
-FPS = 50
+FPS = 60
 VEL = 5
 RVEL = 5
 BVEL = 5
@@ -141,6 +141,10 @@ def draw_window(red, yellow, rfire, bfire, red_slowness, blue_slowness, medcharg
     
     yhp = yellow_health 
     rhp = red_health
+    rslow = red_slowness 
+    bslow = blue_slowness
+    rslbar = pygame.Rect(25,50,rslow,10)
+    bslbar =pygame.Rect(700,50,bslow,10)
     greenredhp = pygame.Rect(25,25,yhp,10)
     greenbluehp = pygame.Rect(700,25,rhp,10)
     WIN.blit(SPACE,(0,0))
@@ -149,6 +153,9 @@ def draw_window(red, yellow, rfire, bfire, red_slowness, blue_slowness, medcharg
     pygame.draw.rect(WIN, GREEN, greenredhp)
     pygame.draw.rect(WIN, RED, barbluehp)
     pygame.draw.rect(WIN, GREEN, greenbluehp)
+    pygame.draw.rect(WIN, aqua, rslbar)
+    pygame.draw.rect(WIN, aqua, bslbar)
+
  
                            
 
@@ -603,13 +610,13 @@ def info2():
         TextSurf, TextRect = text_objects1("# To Move The First Ship Use W,A,S,D ", largeText)
         TextRect.center = ((WIDTH/1.95),(HEIGHT/5))
         WIN.blit(TextSurf, TextRect)
-        text("# Use Left Ctrl Key To Shoot",2.150,4,jblkacolor2,15,"verdana")
+        text("# Use Q Key To Shoot",2.300,4,jblkacolor2,15,"verdana")
         largeText = pygame.font.SysFont("verdana",20,bold=True)
         TextSurf, TextRect = text_objects("• Player 2:-", largeText)
         TextRect.center = ((WIDTH/2.65),(HEIGHT/3.2))
         WIN.blit(TextSurf, TextRect)
-        text("# To Move The Second Ship Use Arrow Keys ",1.85,2.7,jblkacolor2,15,"verdana")
-        text("# Use Right Ctrl to Shoot ",2.22,2.4,jblkacolor2,15,"verdana")
+        text("# To Move The Second Ship KP 8,4,5,6 Keys ",1.85,2.7,jblkacolor2,15,"verdana")
+        text("# Use Right KP (keypad) 7 to Shoot ",1.98,2.4,jblkacolor2,15,"verdana")
         largeText = pygame.font.Font("fonts/airstrike.ttf",30,bold=True)
         TextSurf, TextRect = text_objects("Gameplay", largeText)
         TextRect.center = ((WIDTH/1.50),(HEIGHT/1.9))
@@ -618,8 +625,16 @@ def info2():
         TextSurf, TextRect = text_objects("• Attacking:-", largeText)
         TextRect.center = ((WIDTH/2.59),(HEIGHT/1.7))
         WIN.blit(TextSurf, TextRect)
-        
-
+        text("actived only once when the super bar goes to 100%",1.730,1.45,jblkacolor2,15,"verdana")
+        text("#Super: Supers are special attacks they can be",1.820,1.55,jblkacolor2,15,"verdana")
+        text("#Charging Super: You Can Charge Your Super",1.835,1.37,jblkacolor2,15,"verdana")
+        text("By Hitting The Enemy 4 Times With Normal Bullets.",1.750,1.30,jblkacolor2,15,"verdana")
+        largeText = pygame.font.SysFont("verdana",20,bold=True)
+        TextSurf, TextRect = text_objects("• Super:-", largeText)
+        TextRect.center = ((WIDTH/2.73),(HEIGHT/1.2))
+        WIN.blit(TextSurf, TextRect)
+        text("#P1 use E to use super and P2 use KP 9",1.950,1.14,jblkacolor2,15,"verdana")
+        text("#When someone hits you with their super you get a cooldown of 4 seconds.",1.580,1.10,jblkacolor2,13,"verdana")
       
 
 
@@ -655,13 +670,13 @@ def info():
         TextSurf, TextRect = text_objects1("# To Move The First Ship Use W,A,S,D ", largeText)
         TextRect.center = ((WIDTH/1.95),(HEIGHT/5))
         WIN.blit(TextSurf, TextRect)
-        text("# Use Left Ctrl Key To Shoot",2.150,4,jblkacolor2,15,"verdana")
+        text("# Use Q Key To Shoot",2.300,4,jblkacolor2,15,"verdana")
         largeText = pygame.font.SysFont("verdana",20,bold=True)
         TextSurf, TextRect = text_objects("• Player 2:-", largeText)
         TextRect.center = ((WIDTH/2.65),(HEIGHT/3.2))
         WIN.blit(TextSurf, TextRect)
-        text("# To Move The Second Ship Use Arrow Keys ",1.85,2.7,jblkacolor2,15,"verdana")
-        text("# Use Right Ctrl to Shoot ",2.22,2.4,jblkacolor2,15,"verdana")
+        text("# To Move The Second Ship Use KP 8,4,5,6 ",1.85,2.7,jblkacolor2,15,"verdana")
+        text("# Use Right KP (keypad) 7 to Shoot ",1.98,2.4,jblkacolor2,15,"verdana")
         largeText = pygame.font.Font("fonts/airstrike.ttf",30,bold=True)
         TextSurf, TextRect = text_objects("Gameplay", largeText)
         TextRect.center = ((WIDTH/1.50),(HEIGHT/1.9))
@@ -678,7 +693,8 @@ def info():
         TextSurf, TextRect = text_objects("• Super:-", largeText)
         TextRect.center = ((WIDTH/2.73),(HEIGHT/1.2))
         WIN.blit(TextSurf, TextRect)
-        text("When someone hits you with their super you get a cooldown of 4 seconds.",1.750,1.32,jblkacolor2,15,"verdana")
+        text("#P1 use E to use super and P2 use KP 9",1.950,1.14,jblkacolor2,15,"verdana")
+        text("#When someone hits you with their super you get a cooldown of 4 seconds.",1.580,1.10,jblkacolor2,13,"verdana")
 
 
 
@@ -722,6 +738,16 @@ def exit_sure():
 def game_intro():
     global super_brate
     global super_rrate
+    mp3_path = 'Sound/open-space.mp3'
+    pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load(mp3_path)
+    if vol == 0:
+        pygame.mixer.music.pause()
+    if vol == 1:
+        pygame.mixer.music.play()
+
+
     super_rrate = 0
     super_brate = 0
     intro = True
@@ -766,13 +792,13 @@ def quitgame():
 
 
 
+
+    
+
+
 t1 = 0
 def main():
     gamemusic = 'Sound/gamemusic.mp3'
-    mute = 'Sound/mute.mp3'
-    hit = 'Sound/playerhit.wav'
-    fire = 'Sound/playershot.wav'
-
     if vol == 0:
         pygame.mixer.music.pause()
     if vol == 1:
@@ -785,14 +811,12 @@ def main():
     if eff == 0:
         sou = 0
 
-        
-
+    
     global pause
-    global super_rrate
     global super_brate
+    global super_rrate
     global BVEL
     global RVEL
-    global t1
 
     blue_slowness = 0
     red_slowness = 0
@@ -831,15 +855,7 @@ def main():
                 pygame.quit()
                 quit()
                 
-            pygame.time.set_timer(medcdb, 500)
-            if event.type == medcdb:
-                if medchargeb < 121:
-                    medchargeb += 3
-
-            pygame.time.set_timer(medcdr, 500)
-            if event.type == medcdr:
-                if medcharger < 121:
-                    medcharger += 3       
+               
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q and len(yellow_bullets) < MAX_BULLETS:
@@ -874,11 +890,7 @@ def main():
                         if sou == 1:
                             BULLET_FIRE_SOUND.play()
 
-                if event.key == pygame.K_KP_PLUS:
-                    if medchargeb == 120:
-                        if red_health < 8:
-                            red_health += 3
-                            medchargeb = 0
+                
                         
                     
                     
