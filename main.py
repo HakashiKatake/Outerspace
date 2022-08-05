@@ -1,6 +1,9 @@
 from configparser import RawConfigParser
-import pygame
+
 import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import pygame
+
 
 
 gameIcon = pygame.image.load('Assets/spaceship_red.png')
